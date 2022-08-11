@@ -12,10 +12,27 @@
 
 <body>
 
-  <!-- Add gallery items to this list -->
-  <div class="gallery"></div>
+  <!-- Form and Submit button -->
+<header class="header">
+  <div class="container">
+  <form class="search-form" id="search-form">
+    <input class="search-form__input" type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." />
+    <button class="search-form__btn" type="submit">
+      <img class="search-form__icon" src="./icons8-search-30.png" alt="search" loading="lazy" />
+    </button>
+  </form>
+  </div>
+</header>
 
-  <script src="js/01-gallery.js" type="module"></script>
+  <div class="container">
+      <!-- Gallery items -->
+  <div class="gallery"></div>
+  <!-- Load more button -->
+  <button class="extra-btn is-hidden" type="button">Load more</button>
+  </div>
+
+
+  <script src="js/index.js" type="module"></script>
 </body>
 
 </html>
