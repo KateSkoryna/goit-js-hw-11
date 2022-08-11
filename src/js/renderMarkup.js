@@ -23,16 +23,16 @@ const createGalleryListMarkup = gallery => {
   </div>
   <div class="gallery-info__box">
     <p class="gallery-info__item">
-      <b>Likes: ${likes}</b>
+      <b>Likes: <br>${likes}</b>
     </p>
     <p class="gallery-info__item">
-      <b>Views: ${views}</b>
+      <b>Views: <br>${views}</b>
     </p>
     <p class="gallery-info__item">
-      <b>Comments: ${comments}</b>
+      <b>Comments: <br>${comments}</b>
     </p>
     <p class="gallery-info__item">
-      <b>Downloads: ${downloads}</b>
+      <b>Downloads:<br> ${downloads}</b>
     </p>
   </div>
 </div></a>`

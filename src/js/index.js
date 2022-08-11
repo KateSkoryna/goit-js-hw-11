@@ -1,6 +1,6 @@
 import Notiflix from 'notiflix';
-import { formEl, inputEl, loadMoreBtnEl } from './ref';
-import fetchPhotos from './fetchData';
+import { galleryEl, formEl, inputEl, loadMoreBtnEl } from './ref';
+import fetchData from './fetchData';
 import createGalleryListMarkup from './renderMarkup';
 import checkResponse from './checkResponse';
 const debounce = require('lodash.debounce');
@@ -10,23 +10,26 @@ let value = null;
 let stepPage = 1;
 
 inputEl.addEventListener('input', debounce(onInputData, DEBOUNCE_DELAY));
-formEl.addEventListener('submit', onClickLoadPhoto);
+formEl.addEventListener('submit', onClickLonBtnSubmit);
 
 function onInputData(event) {
   value = event.target.value.toLowerCase().trim();
   return value;
 }
 
-function onClickLoadPhoto(event) {
+function onClickLonBtnSubmit(event) {
   event.preventDefault();
 
   if (!value) {
+    galleryEl.innerHTML = '';
+    loadMoreBtnEl.classList.add('is-hidden');
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
     return;
   } else {
-    fetchPhotos(value, stepPage)
+    galleryEl.innerHTML = '';
+    fetchData(value, stepPage)
       .then(checkResponse)
       .catch(error => console.log(error));
   }
@@ -34,7 +37,7 @@ function onClickLoadPhoto(event) {
 
 const onClickAddPage = async () => {
   stepPage += 1;
-  fetchPhotos(value, stepPage)
+  fetchData(value, stepPage)
     .then(onClickLoadMore)
     .catch(error => console.log(error));
 };
