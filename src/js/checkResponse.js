@@ -6,10 +6,11 @@ let photoPerPage = 40;
 
 function checkResponse(response) {
   const dataHits = response.data.hits;
+  const totalHits = response.data.totalHits;
   checkPhotoAmmount(response);
 
   if (dataHits.length !== 0) {
-    Notiflix.Notify.success('Hooray! We found totalHits images.');
+    Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
     createGalleryListMarkup(dataHits);
   } else {
     galleryEl.innerHTML = '';

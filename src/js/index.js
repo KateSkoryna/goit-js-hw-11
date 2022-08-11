@@ -14,7 +14,6 @@ formEl.addEventListener('submit', onClickLoadPhoto);
 
 function onInputData(event) {
   value = event.target.value.toLowerCase().trim();
-  console.log(value);
   return value;
 }
 
@@ -48,7 +47,9 @@ function onClickLoadMore(response) {
 
   if (stepPage > totalPages) {
     loadMoreBtnEl.classList.add('is-hidden');
-    Notiflix.Notify.success(`Hooray! We found ${dataTotalPhoto} images.`);
+    Notiflix.Notify.info(
+      "We're sorry, but you've reached the end of search results."
+    );
   }
 
   const dataTotalImg = response.data.hits;
