@@ -1,4 +1,7 @@
 import { galleryEl } from './ref';
+import Notiflix from 'notiflix';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const createGalleryListMarkup = gallery => {
   gallery.innerHTML = '';
@@ -36,7 +39,7 @@ const createGalleryListMarkup = gallery => {
     )
     .join('');
 
-  galleryEl.innerHTML = markup;
+  galleryEl.insertAdjacentHTML('beforeend', markup);
 
   new SimpleLightbox('.gallery a', {
     captionsData: 'alt',

@@ -1,16 +1,32 @@
 import createGalleryListMarkup from './renderMarkup';
 import Notiflix from 'notiflix';
+import { galleryEl, loadMoreBtnEl } from './ref';
 
-const checkResponse = async response => {
-  const dataObj = await response.data.hits;
-  if (dataObj === []) {
+let photoPerPage = 40;
+
+function checkResponse(response) {
+  const dataHits = response.data.hits;
+  checkPhotoAmmount(response);
+
+  if (dataHits.length !== 0) {
+    Notiflix.Notify.success('Hooray! We found totalHits images.');
+    createGalleryListMarkup(dataHits);
+  } else {
+    galleryEl.innerHTML = '';
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
-  } else {
-    const markup = await createGalleryListMarkup(dataObj);
-    return markup;
   }
-};
+}
+
+function checkPhotoAmmount(response) {
+  const dataTotalHits = response.data.totalHits;
+
+  if (dataTotalHits > photoPerPage) {
+    loadMoreBtnEl.classList.remove('is-hidden');
+  } else {
+    return;
+  }
+}
 
 export default checkResponse;
