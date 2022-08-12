@@ -3,19 +3,22 @@ import { galleryEl, formEl, inputEl, loadMoreBtnEl } from './ref';
 import fetchData from './fetchData';
 import createGalleryListMarkup from './renderMarkup';
 import checkResponse from './checkResponse';
-const debounce = require('lodash.debounce');
+import endlessScroll from './endlessScroll';
 
+const debounce = require('lodash.debounce');
 const DEBOUNCE_DELAY = 300;
+
 let value = null;
 let stepPage = 1;
 
 inputEl.addEventListener('input', debounce(onInputData, DEBOUNCE_DELAY));
-formEl.addEventListener('submit', onClickLonBtnSubmit);
 
 function onInputData(event) {
   value = event.target.value.toLowerCase().trim();
   return value;
 }
+
+formEl.addEventListener('submit', onClickLonBtnSubmit);
 
 function onClickLonBtnSubmit(event) {
   event.preventDefault();
@@ -35,17 +38,18 @@ function onClickLonBtnSubmit(event) {
   }
 }
 
-const onClickAddPage = async () => {
+loadMoreBtnEl.addEventListener('click', onClickAddPage);
+
+async function onClickAddPage() {
   stepPage += 1;
   fetchData(value, stepPage)
     .then(onClickLoadMore)
     .catch(error => console.log(error));
-};
-
-loadMoreBtnEl.addEventListener('click', onClickAddPage);
+}
 
 function onClickLoadMore(response) {
   const dataTotalPhoto = response.data.totalHits;
+  const dataTotalImg = response.data.hits;
   let totalPages = dataTotalPhoto / 40;
 
   if (stepPage > totalPages) {
@@ -54,18 +58,6 @@ function onClickLoadMore(response) {
       "We're sorry, but you've reached the end of search results."
     );
   }
-
-  const dataTotalImg = response.data.hits;
   createGalleryListMarkup(dataTotalImg);
   endlessScroll(galleryEl);
-}
-
-function endlessScroll(gallery) {
-  const { height: cardHeight } =
-    gallery.firstElementChild.getBoundingClientRect();
-
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
 }

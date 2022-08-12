@@ -2,8 +2,6 @@ import createGalleryListMarkup from './renderMarkup';
 import Notiflix from 'notiflix';
 import { galleryEl, loadMoreBtnEl } from './ref';
 
-let photoPerPage = 40;
-
 function checkResponse(response) {
   const dataHits = response.data.hits;
   const totalHits = response.data.totalHits;
@@ -21,6 +19,7 @@ function checkResponse(response) {
 }
 
 function checkPhotoAmmount(response) {
+  const photoPerPage = 40;
   const dataTotalHits = response.data.totalHits;
 
   if (dataTotalHits > photoPerPage) {
