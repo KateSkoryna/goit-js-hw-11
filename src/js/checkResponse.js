@@ -26,7 +26,7 @@ function checkPhotoAmmount(response) {
   if (dataTotalHits > photoPerPage) {
     loadMoreBtnEl.classList.remove('is-hidden');
   } else {
-    return;
+    loadMoreBtnEl.classList.add('is-hidden');
   }
 }
 

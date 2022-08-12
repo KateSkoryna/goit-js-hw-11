@@ -57,4 +57,15 @@ function onClickLoadMore(response) {
 
   const dataTotalImg = response.data.hits;
   createGalleryListMarkup(dataTotalImg);
+  endlessScroll(galleryEl);
+}
+
+function endlessScroll(gallery) {
+  const { height: cardHeight } =
+    gallery.firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
 }
