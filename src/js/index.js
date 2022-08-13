@@ -1,63 +1,6 @@
-import Notiflix from 'notiflix';
-import { galleryEl, formEl, inputEl, loadMoreBtnEl } from './ref';
-import fetchData from './fetchData';
-import createGalleryListMarkup from './renderMarkup';
-import checkResponse from './checkResponse';
-import endlessScroll from './endlessScroll';
-
-const debounce = require('lodash.debounce');
-const DEBOUNCE_DELAY = 300;
-
-let value = null;
-let stepPage = 1;
-
-inputEl.addEventListener('input', debounce(onInputData, DEBOUNCE_DELAY));
-
-function onInputData(event) {
-  value = event.target.value.toLowerCase().trim();
-  return value;
-}
+import { formEl, loadMoreBtnEl } from './ref';
+import onClickLonBtnSubmit from './onClickLonBtnSubmit';
+import { onClickLonBtnSubmit, onClickAddPage } from './onClickLonBtnSubmit';
 
 formEl.addEventListener('submit', onClickLonBtnSubmit);
-
-function onClickLonBtnSubmit(event) {
-  event.preventDefault();
-
-  if (!value) {
-    galleryEl.innerHTML = '';
-    loadMoreBtnEl.classList.add('is-hidden');
-    Notiflix.Notify.failure(
-      'Sorry, there are no images matching your search query. Please try again.'
-    );
-    return;
-  } else {
-    galleryEl.innerHTML = '';
-    fetchData(value, stepPage)
-      .then(checkResponse)
-      .catch(error => console.log(error));
-  }
-}
-
 loadMoreBtnEl.addEventListener('click', onClickAddPage);
-
-async function onClickAddPage() {
-  stepPage += 1;
-  fetchData(value, stepPage)
-    .then(onClickLoadMore)
-    .catch(error => console.log(error));
-}
-
-function onClickLoadMore(response) {
-  const dataTotalPhoto = response.data.totalHits;
-  const dataTotalImg = response.data.hits;
-  let totalPages = dataTotalPhoto / 40;
-
-  if (stepPage > totalPages) {
-    loadMoreBtnEl.classList.add('is-hidden');
-    Notiflix.Notify.info(
-      "We're sorry, but you've reached the end of search results."
-    );
-  }
-  createGalleryListMarkup(dataTotalImg);
-  endlessScroll(galleryEl);
-}
