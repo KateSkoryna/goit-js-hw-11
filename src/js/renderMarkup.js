@@ -45,9 +45,7 @@ const createGalleryListMarkup = gallery => {
     captionPosition: 'bottom',
     animationSpeed: 250,
   });
-
   lightBox.refresh();
-
   return galleryEl;
 };
 
