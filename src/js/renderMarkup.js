@@ -40,11 +40,13 @@ const createGalleryListMarkup = gallery => {
 
   galleryEl.insertAdjacentHTML('beforeend', markup);
 
-  new SimpleLightbox('.gallery a', {
+  const lightBox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionPosition: 'bottom',
     animationSpeed: 250,
   });
+
+  lightBox.refresh();
 
   return galleryEl;
 };
