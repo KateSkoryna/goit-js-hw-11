@@ -26,7 +26,7 @@ function onClickLonBtnSubmit(event) {
   }
 }
 
-async function onClickAddPage() {
+function onClickAddPage() {
   stepPage += 1;
   fetchData(value, stepPage)
     .then(data => onClickLoadMore(data, stepPage))

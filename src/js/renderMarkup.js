@@ -3,8 +3,6 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const createGalleryListMarkup = gallery => {
-  gallery.innerHTML = '';
-
   const markup = gallery
     .map(
       ({
@@ -46,7 +44,6 @@ const createGalleryListMarkup = gallery => {
     animationSpeed: 250,
   });
   lightBox.refresh();
-  return galleryEl;
 };
 
 export default createGalleryListMarkup;
